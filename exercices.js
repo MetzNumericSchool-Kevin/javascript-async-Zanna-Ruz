@@ -62,6 +62,23 @@ const afficherRechercheArtefact = ({ artefact, epoque, success = true }) => {
 /**
  * Votre partie commence ici, la partie modifiable par vos soins
  */
+
+function voyagerTemps(destination, callback) {
+  // let destination = epoques
+  console.log("Voyage en cours vers la destination : ", destination);
+  setTimeout(
+    () => {
+      callback(destination);
+    },
+    1000,
+    3000
+  );
+  console.log("Arrivée à l'époque destination : ", destination);
+}
+
+const epoque_element = document.querySelector(".localisation_epoque");
+const display_loading = document.querySelector(".voyage_en_cours");
+
 let nomEpoqueActuelle;
 
 creerLesChoixEpoque(epoques);
@@ -70,6 +87,14 @@ creerLesChoixEpoque(epoques);
 // et qu'une époque de destination du voyage temporel a été choisi
 function quandEpoqueChoisie(nomEpoque) {
   nomEpoqueActuelle = nomEpoque;
+  epoque_element.style.display = "none";
+  display_loading.style.display = "block";
+  voyagerTemps(nomEpoque, () => {
+    display_loading.style.display = "none";
+    epoque_element.style.display = "block";
+    afficherDestination(nomEpoque);
+  });
+
   // Utilisation de votre fonction voyagerTemps
 }
 
